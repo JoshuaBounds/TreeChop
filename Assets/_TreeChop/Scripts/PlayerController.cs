@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     public float moveTime = 0.5f;
 
+    public bool isTileInFront = false;
+    public bool isTileBehind = false;
+
     private bool isMoving = false;
     private float moveProgress;
     private Vector3 moveStartPos;
@@ -41,13 +44,13 @@ public class PlayerController : MonoBehaviour
         PrepareXForm();
         moveEndRot = transform.rotation * rot;
     }
-            
+
     // Update is called once per frame
     void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
+        float verticalInput = Input.GetAxis("Vertical");    
+        
         // Moves the player based on player input
         if (!isMoving)
         {
@@ -55,9 +58,9 @@ public class PlayerController : MonoBehaviour
                 XForm(Quaternion.Euler(0, 90, 0));
             else if (horizontalInput < 0f)
                 XForm(Quaternion.Euler(0, -90, 0));
-            else if (verticalInput > 0f)
+            else if (verticalInput > 0f && isTileInFront)
                 XForm(Vector3.forward);
-            else if (verticalInput < 0f)
+            else if (verticalInput < 0f && isTileBehind)
                 XForm(Vector3.back);
         }
         else
