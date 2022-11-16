@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    /*
+    Main player controller.
+    */
+
     public float moveTime = 0.5f;
 
+    // Controlled by PlayerCollider
     public bool isTileInFront = false;
     public bool isTileBehind = false;
 

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerCollider : MonoBehaviour
 {
+    /*
+    Keeps track of objects entering and exiting the player triggers.
+    Directly informs the given PlayerController about what's in the triggers.
+    */
+
     public PlayerController player;
     public bool isBack;
     
@@ -22,6 +27,7 @@ public class PlayerCollider : MonoBehaviour
         
     }
 
+    // Called for each object the enters the trigger
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Tile")
@@ -39,6 +45,7 @@ public class PlayerCollider : MonoBehaviour
         }
     }
 
+    // Called each time an object exits the trigger
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Tile")
