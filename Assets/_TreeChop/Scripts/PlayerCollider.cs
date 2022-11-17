@@ -10,7 +10,7 @@ public class PlayerCollider : MonoBehaviour
     */
 
     public PlayerController player;
-    public bool isBack;
+    public bool isBackTrigger;
     
     private List<Collider> tilesInFront = new List<Collider>();
     private List<Collider> tilesBehind = new List<Collider>();
@@ -32,14 +32,16 @@ public class PlayerCollider : MonoBehaviour
     {
         if (other.tag == "Tile")
         {
-            if (!isBack)
+            if (!isBackTrigger)
             {
                 tilesInFront.Add(other);
+                player.currentTileInFront = other;
                 player.isTileInFront = true;
             }
             else
             {
                 tilesBehind.Add(other);
+                player.currentTileBehind = other;
                 player.isTileBehind = true;
             }
         }
@@ -50,17 +52,23 @@ public class PlayerCollider : MonoBehaviour
     {
         if (other.tag == "Tile")
         {
-            if (!isBack)
+            if (!isBackTrigger)
             {
                 tilesInFront.Remove(other);
                 if (tilesInFront.Count < 1)
+                {
+                    player.currentTileInFront = null;
                     player.isTileInFront = false;
+                }
             }
             else
             {
                 tilesBehind.Remove(other);
                 if (tilesBehind.Count < 1)
+                {
+                    player.currentTileBehind = null;
                     player.isTileBehind = false;
+                }
             }
         }
     }

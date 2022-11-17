@@ -212,6 +212,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTime: 0.2
   isTileInFront: 0
+  isTileBehind: 0
+  currentTileInFront: {fileID: 0}
+  currentTileBehind: {fileID: 0}
 --- !u!54 &2651240651072920246
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -286,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2651240651072920248}
-  isBack: 0
+  isBackTrigger: 0
 --- !u!1 &3490133783715935164
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,4 +348,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2651240651072920248}
-  isBack: 1
+  isBackTrigger: 1

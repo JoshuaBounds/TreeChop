@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     // Controlled by PlayerCollider
     public bool isTileInFront = false;
     public bool isTileBehind = false;
+    public Collider currentTileInFront;
+    public Collider currentTileBehind;
 
     private bool isMoving = false;
     private float moveProgress;
@@ -63,25 +65,28 @@ public class PlayerController : MonoBehaviour
                 XForm(Quaternion.Euler(0, 90, 0));
             else if (horizontalInput < 0f)
                 XForm(Quaternion.Euler(0, -90, 0));
-            else if (verticalInput > 0f && isTileInFront)
+            else if (verticalInput > 0f && currentTileInFront != null)
                 XForm(Vector3.forward);
-            else if (verticalInput < 0f && isTileBehind)
+            else if (verticalInput < 0f && currentTileBehind != null)
                 XForm(Vector3.back);
         }
         else
         {
             moveProgress += Time.deltaTime;
 
-            if (moveProgress < moveTime)
+            if (moveProgress < moveTime) // Player in motion
             {
                 transform.position = Vector3.Lerp(moveStartPos, moveEndPos, moveProgress * 1 / moveTime);
                 transform.rotation = Quaternion.Slerp(moveStartRot, moveEndRot, moveProgress * 1 / moveTime);
             } 
-            else
+            else // End of player movement
             {
                 transform.position = moveEndPos;
                 transform.rotation = moveEndRot;
                 isMoving = false;
+
+                if (currentTileInFront != null)
+                    currentTileInFront.GetComponent<Animator>().SetBool("isAlive", true);
             }
         }
     }
