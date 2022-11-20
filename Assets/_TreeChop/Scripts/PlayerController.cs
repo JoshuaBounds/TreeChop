@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float moveTime = 0.5f;
 
     // Controlled by PlayerCollider
+    public int moveCount = 0;
     public bool isTileInFront = false;
     public bool isTileBehind = false;
     public Collider currentTileInFront;
@@ -63,13 +64,29 @@ public class PlayerController : MonoBehaviour
         if (!isMoving)
         {
             if (horizontalInput > 0f)
+            {
                 XForm(Quaternion.Euler(0, 90, 0));
+            }
             else if (horizontalInput < 0f)
+            {
                 XForm(Quaternion.Euler(0, -90, 0));
-            else if (verticalInput > 0f && currentTileInFront != null)
+            }
+            else if (
+                verticalInput > 0f 
+                && currentTileInFront != null 
+                && !currentTileInFront.GetComponent<Animator>().GetBool("isAlive")
+            )
+            {
                 XForm(Vector3.forward);
-            else if (verticalInput < 0f && currentTileBehind != null)
+            }
+            else if (
+                verticalInput < 0f 
+                && currentTileBehind != null
+                && !currentTileBehind.GetComponent<Animator>().GetBool("isAlive")
+            )
+            {
                 XForm(Vector3.back);
+            }
         }
         else
         {
@@ -86,8 +103,16 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = moveEndRot;
                 isMoving = false;
 
-                if (currentTileInFront != null)
-                    currentTileInFront.GetComponent<Animator>().SetBool("isAlive", true);
+                // Increments the move counter
+                moveCount++;
+
+                // Sets the current tile to be in front on every even move (not counting move 0)
+                if (moveCount % 2 == 0)
+                {
+                    if (currentTileInFront != null)
+                        currentTileInFront.GetComponent<Animator>().SetBool("isAlive", true);
+                }
+
             }
         }
     }
