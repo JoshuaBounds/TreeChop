@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     Main player controller.
     */
 
+    // Settings
     public float moveTime = 0.5f;
 
     // Controlled by PlayerCollider
